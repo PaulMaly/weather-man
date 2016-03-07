@@ -1,0 +1,34 @@
+{
+  "name": "weather-man",
+  "version": "1.0.0",
+  "description": "Multiple weather providers in one spot",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhdouglass/weatherman.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bhdouglass/weatherman/issues"
+  },
+  "homepage": "https://github.com/bhdouglass/weatherman#readme",
+  "bin": {
+    "weatherman": "bin/weatherman"
+  },
+  "keywords": [
+    "weather",
+    "yahoo",
+    "openweathermap",
+    "yrno",
+    "forecast",
+    "forcastio",
+    "temperature"
+  ],
+  "author": "Brian Douglass",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "axios": "^0.9.1",
+    "minimist": "^1.2.0",
+    "moment": "^2.11.2",
+    "xml2json": "^0.9.0"
+  }
+}
