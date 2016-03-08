@@ -1,6 +1,6 @@
 {
   "name": "weather-man",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Multiple weather providers in one spot",
   "main": "index.js",
   "repository": {
@@ -15,7 +15,7 @@
     "weatherman": "bin/weatherman"
   },
   "scripts": {
-    "browserify": "browserify index.js --standalone WeatherMan > example/weather-man.js",
+    "browserify": "browserify -g uglifyify index.js --standalone WeatherMan > example/weather-man.js",
     "server": "cd example && http-server -p 8000"
   },
   "keywords": [
@@ -25,7 +25,9 @@
     "yrno",
     "forecast",
     "forcastio",
-    "temperature"
+    "temperature",
+    "air quality",
+    "aqi"
   ],
   "author": "Brian Douglass",
   "license": "GPL-3.0",
@@ -37,6 +39,7 @@
     "xmldom": "^0.1.22"
   },
   "devDependencies": {
-    "browserify": "^13.0.0"
+    "browserify": "^13.0.0",
+    "uglifyify": "^3.0.1"
   }
 }

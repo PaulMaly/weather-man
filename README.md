@@ -1,7 +1,8 @@
 # WeatherMan
 
 A JavaScript weather library with multiple weather povider options. Currently it
-supports the following weather providers: Yahoo, OpenWeatherMap, YR.no, Forecast.io.
+supports the following weather providers: Yahoo, OpenWeatherMap, YR.no, Forecast.io,
+and AQICN.org (for air quality data).
 
 ## Install
 
@@ -17,6 +18,7 @@ var WeatherMan = require('weather-man');
 
 var wm = new WeatherMan(WeatherMan, 'apikey');
 wm.getCurrent(latitude, longitude).then(function(result) {
+    //If the result is for weather
     console.log(result.getTemperature(WeatherMan.CELCIUS));
     console.log(result.getWindChill(WeatherMan.FAHRENHEIT));
     console.log(result.getHeatIndex(WeatherMan.KELVIN));
@@ -25,6 +27,12 @@ wm.getCurrent(latitude, longitude).then(function(result) {
     console.log(result.getCondition());
     console.log(result.getSunrise());
     console.log(result.getSunset());
+
+    //If the result is for air quality
+    console.log('AQI: ' + result.getAQI());
+    console.log('Location: ' + result.getLocation());
+    console.log('AQI String: ' + result.getAQIString());
+    console.log('AQI Color: ' + result.getAQIColor());
 });
 ~~~
 

@@ -19,29 +19,27 @@
                     var windSpeedUnits = WeatherMan.MILES;
                     var ampm = WeatherMan.AMPM;
 
-                    var temp = (Math.round(result.getTemperature(units) * 100) / 100) + ' ' + units;
-                    var windChill = (Math.round(result.getWindChill(units) * 100) / 100) + ' ' + units;
-                    var heatIndex = (Math.round(result.getHeatIndex(units) * 100) / 100) + ' ' + units;
-                    var wind = (Math.round(result.getWindSpeed(windSpeedUnits) * 100) / 100) + ' ' + windSpeedUnits;
-                    var humidity = (Math.round(result.getHumidity() * 100) / 100) + '%';
-                    var condition = result.getCondition();
-                    var sunrise = result.getSunriseFormatted(ampm);
-                    var sunset = result.getSunsetFormatted(ampm);
+                    var output = 'Temperature: ' + (Math.round(result.getTemperature(units) * 100) / 100) + ' ' + units;
+                    output += '\nWind Chill: ' + (Math.round(result.getWindChill(units) * 100) / 100) + ' ' + units;
+                    output += '\nHeat Index: ' + (Math.round(result.getHeatIndex(units) * 100) / 100) + ' ' + units;
+                    output += '\nWind Speed: ' + (Math.round(result.getWindSpeed(windSpeedUnits) * 100) / 100) + ' ' + windSpeedUnits;
+                    output += '\nHumidity: ' + (Math.round(result.getHumidity() * 100) / 100) + '%';
+                    output += '\nCondition: ' + result.getCondition();
+                    output += '\nSunrise: ' + result.getSunriseFormatted(ampm);
+                    output += '\nSunset: ' + result.getSunsetFormatted(ampm);
 
-                    var output = 'Temperature: ' + temp;
-                    output += '\nWind Chill: ' + windChill;
-                    output += '\nHeat Index: ' + heatIndex;
-                    output += '\nWind Speed: ' + wind;
-                    output += '\nHumidity: ' + humidity;
-                    output += '\nCondition: ' + condition;
-                    output += '\nSunrise: ' + sunrise;
-                    output += '\nSunset: ' + sunset;
+                    var awm = new WeatherMan(WeatherMan.AQICN);
+                    return awm.getCurrent(pos.coords.latitude, pos.coords.longitude).then(function(result) {
+                        output += '\nAQI: ' + (Math.round(result.getAQI() * 100) / 100);
+                        output += '\nAQI String: ' + result.getAQIString();
+                        output += '\nAQI Color: #' + result.getAQIColor();
 
-                    console.log(output);
-                    document.getElementById('output').innerHTML = output;
+                        console.log(output);
+                        document.getElementById('output').innerHTML = output;
+                    })
 
                 }).catch(function(err) {
-                    var message = 'Failed to get current weather: ' + (err.message ? err.message : JSON.stringify(err));
+                    var message = 'Failed: ' + (err.message ? err.message : JSON.stringify(err));
 
                     console.error(message);
                     document.getElementById('output').innerHTML = message;

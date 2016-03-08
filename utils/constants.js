@@ -13,6 +13,7 @@ module.exports = {
     OPENWEATHERMAP: 'openweathermap',
     YRNO: 'yrno',
     FORECASTIO: 'forecastio',
+    AQICN: 'aqicn',
 
     CLEAR: 'clear',
     CLOUDY: 'cloudy',

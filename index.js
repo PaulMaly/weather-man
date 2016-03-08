@@ -2,14 +2,18 @@ var yahoo = require('./providers/yahoo');
 var openweathermap = require('./providers/openweathermap');
 var yrno = require('./providers/yrno');
 var forecastio = require('./providers/forecastio');
+var aqicn = require('./providers/aqicn');
 var constants = require('./utils/constants');
 var InvalidProvider = require('./utils/exceptions').InvalidProvider;
+var CurrentAQIResult = require('./results/currentAQIResult');
+var CurrentResult = require('./results/currentResult');
 
 var providers = {};
 providers[constants.YAHOO] = yahoo;
 providers[constants.OPENWEATHERMAP] = openweathermap;
 providers[constants.YRNO] = yrno;
 providers[constants.FORECASTIO] = forecastio;
+providers[constants.AQICN] = aqicn;
 
 var WeatherMan = function(provider, apiKey) {
     if (!providers[provider]) {
@@ -34,6 +38,7 @@ WeatherMan.YAHOO = constants.YAHOO;
 WeatherMan.OPENWEATHERMAP = constants.OPENWEATHERMAP;
 WeatherMan.YRNO = constants.YRNO;
 WeatherMan.FORECASTIO = constants.FORECASTIO;
+WeatherMan.AQICN = constants.AQICN;
 
 WeatherMan.CLEAR = constants.CLEAR;
 WeatherMan.CLOUDY = constants.CLOUDY;
@@ -50,6 +55,9 @@ WeatherMan.HURRICANE = constants.HURRICANE;
 WeatherMan.EXTREME_COLD = constants.EXTREME_COLD;
 WeatherMan.EXTREME_HEAT = constants.EXTREME_HEAT;
 WeatherMan.SNOW_THUNDERSTORM = constants.SNOW_THUNDERSTORM;
+
+WeatherMan.CurrentResult = CurrentResult;
+WeatherMan.CurrentAQIResult = CurrentAQIResult;
 
 WeatherMan.prototype.getCurrent = function(lat, lng, getSunrise) {
     return providers[this.provider].getCurrent(lat, lng, this.apiKey, getSunrise);
