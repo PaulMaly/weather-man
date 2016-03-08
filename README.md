@@ -10,7 +10,7 @@ supports the following weather providers: Yahoo, OpenWeatherMap, YR.no, Forecast
 
 ## Usage
 
-JavaScript
+NodeJS
 
 ~~~
 var WeatherMan = require('weather-man');
@@ -27,6 +27,11 @@ wm.getCurrent(latitude, longitude).then(function(result) {
     console.log(result.getSunset());
 });
 ~~~
+
+Browser
+
+Grab a copy of example/weather-man.js and include it in your html.
+Then follow the NodeJS example (without the require).
 
 CLI
 

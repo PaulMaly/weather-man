@@ -9,23 +9,6 @@
         <pre id="output"></pre>
 
         <script>
-            function formatTime(time, units) {
-                var minutes = time % 60;
-                var hours = Math.round((time - minutes) / 60);
-                var am = (hours < 12);
-
-                var formatted = hours + ':' + minutes;
-                if (units == WeatherMan.FAHRENHEIT) {
-                    if (!am) {
-                        hours -= 12;
-                    }
-
-                    formatted = hours + ':' + minutes + ' ' + (am ? 'am' : 'pm');
-                }
-
-                return formatted;
-            }
-
             navigator.geolocation.getCurrentPosition(function(pos) { //Success
                 console.log('lat: ' + pos.coords.latitude);
                 console.log('lng: ' + pos.coords.longitude);
@@ -34,15 +17,16 @@
                 wm.getCurrent(pos.coords.latitude, pos.coords.longitude).then(function(result) {
                     var units = WeatherMan.FAHRENHEIT;
                     var windSpeedUnits = WeatherMan.MILES;
+                    var ampm = WeatherMan.AMPM;
 
                     var temp = (Math.round(result.getTemperature(units) * 100) / 100) + ' ' + units;
                     var windChill = (Math.round(result.getWindChill(units) * 100) / 100) + ' ' + units;
                     var heatIndex = (Math.round(result.getHeatIndex(units) * 100) / 100) + ' ' + units;
                     var wind = (Math.round(result.getWindSpeed(windSpeedUnits) * 100) / 100) + ' ' + windSpeedUnits;
-                    var humidity = (Math.round(result.getHumidity() * 100) / 100);
+                    var humidity = (Math.round(result.getHumidity() * 100) / 100) + '%';
                     var condition = result.getCondition();
-                    var sunrise = formatTime(result.getSunrise(), units);
-                    var sunset = formatTime(result.getSunset(), units);
+                    var sunrise = result.getSunriseFormatted(ampm);
+                    var sunset = result.getSunsetFormatted(ampm);
 
                     var output = 'Temperature: ' + temp;
                     output += '\nWind Chill: ' + windChill;

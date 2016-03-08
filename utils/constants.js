@@ -7,6 +7,8 @@ module.exports = {
     MILES: 'mi/h',
     METERS: 'm/s',
 
+    AMPM: 'am/pm',
+
     YAHOO: 'yahoo',
     OPENWEATHERMAP: 'openweathermap',
     YRNO: 'yrno',

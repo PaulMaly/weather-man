@@ -14,35 +14,19 @@ var args = minimist(process.argv.slice(2), {
     }
 });
 
-function formatTime(time, units) {
-    var minutes = time % 60;
-    var hours = Math.round((time - minutes) / 60);
-    var am = (hours < 12);
-
-    var formatted = hours + ':' + minutes;
-    if (units == WeatherMan.FAHRENHEIT) {
-        if (!am) {
-            hours -= 12;
-        }
-
-        formatted = hours + ':' + minutes + ' ' + (am ? 'am' : 'pm');
-    }
-
-    return formatted;
-}
-
 var wm = new WeatherMan(args.provider, args.apikey);
 wm.getCurrent(args.lat, args.lng).then(function(result) {
     var windSpeedUnits = (args.units == WeatherMan.FAHRENHEIT) ? WeatherMan.MILES : WeatherMan.KILOMETERS;
+    var ampm = (args.units == WeatherMan.FAHRENHEIT) ? WeatherMan.AMPM : null;
 
-    var temp = (Math.round(result.getTemperature(args.units) * 100) / 100);
-    var windChill = (Math.round(result.getWindChill(args.units) * 100) / 100);
-    var heatIndex = (Math.round(result.getHeatIndex(args.units) * 100) / 100);
-    var wind = (Math.round(result.getWindSpeed(windSpeedUnits) * 100) / 100);
-    var humidity = (Math.round(result.getHumidity() * 100) / 100);
+    var temp = Math.round(result.getTemperature(args.units) * 100) / 100;
+    var windChill = Math.round(result.getWindChill(args.units) * 100) / 100;
+    var heatIndex = Math.round(result.getHeatIndex(args.units) * 100) / 100;
+    var wind = Math.round(result.getWindSpeed(windSpeedUnits) * 100) / 100;
+    var humidity = Math.round(result.getHumidity() * 100) / 100;
     var condition = result.getCondition();
-    var sunrise = formatTime(result.getSunrise(), args.units);
-    var sunset = formatTime(result.getSunset(), args.units);
+    var sunrise = result.getSunriseFormatted(ampm);
+    var sunset = result.getSunsetFormatted(ampm);
 
     if (args.json) {
         console.log(JSON.stringify({

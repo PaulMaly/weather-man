@@ -54,12 +54,56 @@ CurrentResult.prototype.getHumidity = function() {
     return this.humidity;
 };
 
+CurrentResult.prototype.minutesToDate = function(time) {
+    var minutes = time % 60;
+    var hours = Math.round((time - minutes) / 60);
+
+    var date = new Date();
+    date.setHours(hour);
+    date.setMinutes(minutes);
+
+    return date;
+};
+
+CurrentResult.prototype.formatMinutes = function(time, ampm) {
+    var minutes = time % 60;
+    var hours = Math.round((time - minutes) / 60);
+    var am = (hours < 12);
+
+    var formatted = hours + ':' + minutes;
+    if (ampm == constants.AMPM) {
+        if (!am) {
+            hours -= 12;
+        }
+
+        formatted = hours + ':' + minutes + ' ' + (am ? 'am' : 'pm');
+    }
+
+    return formatted;
+}
+
 CurrentResult.prototype.getSunrise = function() {
     return this.sunrise;
 };
 
+CurrentResult.prototype.getSunriseDate = function() {
+    return this.minutesToDate(this.getSunrise());
+};
+
+CurrentResult.prototype.getSunriseFormatted = function(ampm) {
+    return this.formatMinutes(this.getSunrise(), ampm);
+};
+
 CurrentResult.prototype.getSunset = function() {
     return this.sunset;
+};
+
+CurrentResult.prototype.getSunsetDate = function() {
+    return this.minutesToDate(this.getSunset());
+};
+
+CurrentResult.prototype.getSunsetFormatted = function(ampm) {
+    return this.formatMinutes(this.getSunset(), ampm);
 };
 
 CurrentResult.prototype.getWindChill = function(units) {

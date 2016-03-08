@@ -29,6 +29,8 @@ WeatherMan.KILOMETERS = constants.KILOMETERS;
 WeatherMan.MILES = constants.MILES;
 WeatherMan.METERS = constants.METERS;
 
+WeatherMan.AMPM = constants.AMPM;
+
 WeatherMan.YAHOO = constants.YAHOO;
 WeatherMan.OPENWEATHERMAP = constants.OPENWEATHERMAP;
 WeatherMan.YRNO = constants.YRNO;
@@ -7614,15 +7616,57 @@ CurrentResult.prototype.getHumidity = function() {
     return this.humidity;
 };
 
+CurrentResult.prototype.minutesToDate = function(time) {
+    var minutes = time % 60;
+    var hours = Math.round((time - minutes) / 60);
+
+    var date = new Date();
+    date.setHours(hour);
+    date.setMinutes(minutes);
+
+    return date;
+};
+
+CurrentResult.prototype.formatMinutes = function(time, ampm) {
+    var minutes = time % 60;
+    var hours = Math.round((time - minutes) / 60);
+    var am = (hours < 12);
+
+    var formatted = hours + ':' + minutes;
+    if (ampm == constants.AMPM) {
+        if (!am) {
+            hours -= 12;
+        }
+
+        formatted = hours + ':' + minutes + ' ' + (am ? 'am' : 'pm');
+    }
+
+    return formatted;
+}
+
 CurrentResult.prototype.getSunrise = function() {
     return this.sunrise;
+};
+
+CurrentResult.prototype.getSunriseDate = function() {
+    return this.minutesToDate(this.getSunrise());
+};
+
+CurrentResult.prototype.getSunriseFormatted = function(ampm) {
+    return this.formatMinutes(this.getSunrise(), ampm);
 };
 
 CurrentResult.prototype.getSunset = function() {
     return this.sunset;
 };
 
-//TODO get sunrise/sunset as date/timestamp/string
+CurrentResult.prototype.getSunsetDate = function() {
+    return this.minutesToDate(this.getSunset());
+};
+
+CurrentResult.prototype.getSunsetFormatted = function(ampm) {
+    return this.formatMinutes(this.getSunset(), ampm);
+};
 
 CurrentResult.prototype.getWindChill = function(units) {
     var temp = this.getTemperature(constants.CELCIUS);
@@ -8128,6 +8172,8 @@ module.exports = {
     KILOMETERS: 'km/h',
     MILES: 'mi/h',
     METERS: 'm/s',
+
+    AMPM: 'am/pm',
 
     YAHOO: 'yahoo',
     OPENWEATHERMAP: 'openweathermap',

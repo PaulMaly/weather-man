@@ -28,6 +28,8 @@ WeatherMan.KILOMETERS = constants.KILOMETERS;
 WeatherMan.MILES = constants.MILES;
 WeatherMan.METERS = constants.METERS;
 
+WeatherMan.AMPM = constants.AMPM;
+
 WeatherMan.YAHOO = constants.YAHOO;
 WeatherMan.OPENWEATHERMAP = constants.OPENWEATHERMAP;
 WeatherMan.YRNO = constants.YRNO;
