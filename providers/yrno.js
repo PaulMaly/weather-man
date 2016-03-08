@@ -1,6 +1,6 @@
 var axios = require('axios');
 var moment = require('moment');
-var xml2json = require('xml2json');
+var X2JS = require('x2js');
 var CurrentResult = require('./currentResult');
 var MalformedResponse = require('../utils/exceptions').MalformedResponse;
 var constants = require('../utils/constants');
@@ -71,11 +71,12 @@ function convertTime(timestamp) {
 
 function getCurrent(lat, lng, apiKey, getSunrise) {
     getSunrise = (getSunrise === undefined) ? true : getSunrise;
+    var x2js = new X2JS();
 
     var url = 'http://api.yr.no/weatherapi/locationforecast/1.9/?lat=' + lat + ';lon=' + lng;
     return axios.get(url).then(function(res) {
         var result = new CurrentResult();
-        var json = xml2json.toJson(res.data, {object: true});
+        var json = x2js.xml2js(res.data);
 
         if (json.weatherdata && json.weatherdata.product && json.weatherdata.product.time) {
             var simple = [];
@@ -96,8 +97,8 @@ function getCurrent(lat, lng, apiKey, getSunrise) {
             var now = moment.utc(Date.now());
 
             for (var i in simple) {
-                var to = moment.utc(simple[i].to);
-                var from = moment.utc(simple[i].from);
+                var to = moment.utc(simple[i]._to);
+                var from = moment.utc(simple[i]._from);
 
                 if ((from.isSame(now) || from.isBefore(now)) && (to.isSame(now) || to.isAfter(now))) {
                     var diff = Math.abs(to.diff(from));
@@ -127,35 +128,35 @@ function getCurrent(lat, lng, apiKey, getSunrise) {
             }
 
             if (fullWeather && fullWeather.location) {
-                if (fullWeather.location.temperature && fullWeather.location.temperature.value) {
-                    result.setTemperature(parseInt(fullWeather.location.temperature.value), constants.CELCIUS);
+                if (fullWeather.location.temperature && fullWeather.location.temperature._value) {
+                    result.setTemperature(parseInt(fullWeather.location.temperature._value), constants.CELCIUS);
                 }
                 else {
                     throw new MalformedResponse(constants.YRNO, 'Missing temperature data');
                 }
 
-                if (fullWeather.location.symbol && fullWeather.location.symbol.number) {
-                    result.setCondition(condition(parseInt(fullWeather.location.symbol.number)));
+                if (fullWeather.location.symbol && fullWeather.location.symbol._number) {
+                    result.setCondition(condition(parseInt(fullWeather.location.symbol._number)));
                 }
                 else {
                     throw new MalformedResponse(constants.YRNO, 'Missing conditon data');
                 }
 
-                if (fullWeather.location.windSpeed && fullWeather.location.windSpeed.mps) {
-                    result.setWindSpeed(parseFloat(fullWeather.location.windSpeed.mps), constants.METERS);
+                if (fullWeather.location.windSpeed && fullWeather.location.windSpeed._mps) {
+                    result.setWindSpeed(parseFloat(fullWeather.location.windSpeed._mps), constants.METERS);
                 }
 
-                if (fullWeather.location.humidity && fullWeather.location.humidity.value && fullWeather.location.humidity.unit == 'percent') {
-                    result.setHumidity(parseFloat(fullWeather.location.humidity.value));
+                if (fullWeather.location.humidity && fullWeather.location.humidity._value && fullWeather.location.humidity._unit == 'percent') {
+                    result.setHumidity(parseFloat(fullWeather.location.humidity._value));
                 }
 
                 if (getSunrise) {
                     var surl = 'http://api.yr.no/weatherapi/sunrise/1.0/?lat=' + lat + ';lon=' + lng + ';date=' + moment().format('YYYY-MM-DD');
                     return axios.get(surl).then(function(res) {
-                        var sjson = xml2json.toJson(res.data, {object: true});
+                        var sjson = x2js.xml2js(res.data);
                         if (sjson.astrodata && sjson.astrodata.time && sjson.astrodata.time.location && sjson.astrodata.time.location.sun) {
-                            result.setSunrise(convertTime(sjson.astrodata.time.location.sun.rise));
-                            result.setSunset(convertTime(sjson.astrodata.time.location.sun.set));
+                            result.setSunrise(convertTime(sjson.astrodata.time.location.sun._rise));
+                            result.setSunset(convertTime(sjson.astrodata.time.location.sun._set));
                         }
 
                         return result;

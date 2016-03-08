@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>WeatherMan Example</title>
+        <script src="weather-man.js"></script>
+    </head>
+
+    <body>
+        <pre id="output"></pre>
+
+        <script>
+            function formatTime(time, units) {
+                var minutes = time % 60;
+                var hours = Math.round((time - minutes) / 60);
+                var am = (hours < 12);
+
+                var formatted = hours + ':' + minutes;
+                if (units == WeatherMan.FAHRENHEIT) {
+                    if (!am) {
+                        hours -= 12;
+                    }
+
+                    formatted = hours + ':' + minutes + ' ' + (am ? 'am' : 'pm');
+                }
+
+                return formatted;
+            }
+
+            navigator.geolocation.getCurrentPosition(function(pos) { //Success
+                console.log('lat: ' + pos.coords.latitude);
+                console.log('lng: ' + pos.coords.longitude);
+
+                var wm = new WeatherMan(WeatherMan.YAHOO);
+                wm.getCurrent(pos.coords.latitude, pos.coords.longitude).then(function(result) {
+                    var units = WeatherMan.FAHRENHEIT;
+                    var windSpeedUnits = WeatherMan.MILES;
+
+                    var temp = (Math.round(result.getTemperature(units) * 100) / 100) + ' ' + units;
+                    var windChill = (Math.round(result.getWindChill(units) * 100) / 100) + ' ' + units;
+                    var heatIndex = (Math.round(result.getHeatIndex(units) * 100) / 100) + ' ' + units;
+                    var wind = (Math.round(result.getWindSpeed(windSpeedUnits) * 100) / 100) + ' ' + windSpeedUnits;
+                    var humidity = (Math.round(result.getHumidity() * 100) / 100);
+                    var condition = result.getCondition();
+                    var sunrise = formatTime(result.getSunrise(), units);
+                    var sunset = formatTime(result.getSunset(), units);
+
+                    var output = 'Temperature: ' + temp;
+                    output += '\nWind Chill: ' + windChill;
+                    output += '\nHeat Index: ' + heatIndex;
+                    output += '\nWind Speed: ' + wind;
+                    output += '\nHumidity: ' + humidity;
+                    output += '\nCondition: ' + condition;
+                    output += '\nSunrise: ' + sunrise;
+                    output += '\nSunset: ' + sunset;
+
+                    console.log(output);
+                    document.getElementById('output').innerHTML = output;
+
+                }).catch(function(err) {
+                    var message = 'Failed to get current weather: ' + (err.message ? err.message : JSON.stringify(err));
+
+                    console.error(message);
+                    document.getElementById('output').innerHTML = message;
+                });
+
+            }, function(err) { //Error
+                var message = 'Error fetching location: ' + err.code + ' - ' + err.message;
+
+                console.error(message);
+                document.getElementById('output').innerHTML = message;
+
+            }, { //Options
+                timeout: 30000, //30 seconds
+                maximumAge: 300000, //5 minutes
+            });
+        </script>
+    </body>
+</html>

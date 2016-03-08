@@ -1,6 +1,6 @@
 {
   "name": "weather-man",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Multiple weather providers in one spot",
   "main": "index.js",
   "repository": {
@@ -13,6 +13,10 @@
   "homepage": "https://github.com/bhdouglass/weatherman#readme",
   "bin": {
     "weatherman": "bin/weatherman"
+  },
+  "scripts": {
+    "browserify": "browserify index.js --standalone WeatherMan > example/weather-man.js",
+    "server": "cd example && python3 -m http.server"
   },
   "keywords": [
     "weather",
@@ -29,6 +33,10 @@
     "axios": "^0.9.1",
     "minimist": "^1.2.0",
     "moment": "^2.11.2",
-    "xml2json": "^0.9.0"
+    "x2js": "^2.0.0",
+    "xmldom": "^0.1.22"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0"
   }
 }
