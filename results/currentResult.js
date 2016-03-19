@@ -13,12 +13,12 @@ var CurrentResult = function() {
 };
 
 CurrentResult.prototype.setTemperature = function(temp, units) {
-    this.temperature = temp ? temp : 0;
+    this.temperature = temp ? parseFloat(temp) : 0;
     this.temperatureUnits = units ? units : constants.KELVIN;
 };
 
 CurrentResult.prototype.setWindSpeed = function(speed, units) {
-    this.windSpeed = speed ? speed : 0;
+    this.windSpeed = speed ? parseFloat(speed) : 0;
     this.windSpeedUnits = units ? units : constants.KILOMETERS;
 };
 
@@ -27,15 +27,15 @@ CurrentResult.prototype.setCondition = function(condition) {
 };
 
 CurrentResult.prototype.setHumidity = function(humidity) {
-    this.humidity = humidity ? humidity : 0;
+    this.humidity = humidity ? parseFloat(humidity) : 0;
 };
 
 CurrentResult.prototype.setSunrise = function(sunrise) {
-    this.sunrise = (sunrise === null || sunrise === undefined) ? 1 : sunrise;
+    this.sunrise = (sunrise === null || sunrise === undefined) ? 1 : parseInt(sunrise);
 };
 
 CurrentResult.prototype.setSunset = function(sunset) {
-    this.sunset = (sunset === null || sunset === undefined) ? 0 : sunset;
+    this.sunset = (sunset === null || sunset === undefined) ? 0 : parseInt(sunset);
 };
 
 CurrentResult.prototype.getTemperature = function(units) {

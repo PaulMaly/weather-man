@@ -4,7 +4,7 @@ var CurrentAQIResult = function() {
 };
 
 CurrentAQIResult.prototype.setAQI = function(aqi) {
-    this.aqi = aqi;
+    this.aqi = aqi ? parseFloat(aqi) : 0;
 };
 
 CurrentAQIResult.prototype.setLocation = function(location) {
