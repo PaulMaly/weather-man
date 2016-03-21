@@ -1,3 +1,5 @@
+require('es6-promise').polyfill();
+
 var yahoo = require('./providers/yahoo');
 var openweathermap = require('./providers/openweathermap');
 var yrno = require('./providers/yrno');
@@ -8,21 +10,22 @@ var InvalidProvider = require('./utils/exceptions').InvalidProvider;
 var CurrentAQIResult = require('./results/currentAQIResult');
 var CurrentResult = require('./results/currentResult');
 
-var providers = {};
-providers[constants.YAHOO] = yahoo;
-providers[constants.OPENWEATHERMAP] = openweathermap;
-providers[constants.YRNO] = yrno;
-providers[constants.FORECASTIO] = forecastio;
-providers[constants.AQICN] = aqicn;
-
-var WeatherMan = function(provider, apiKey) {
-    if (!providers[provider]) {
-        throw new InvalidProvider(provider);
+var WeatherMan = function(providerName, apiKey) {
+    if (WeatherMan.providerNames.indexOf(providerName) == -1) {
+        throw new InvalidProvider(providerName);
     }
 
-    this.provider = provider;
+    this.providerName = providerName;
     this.apiKey = apiKey;
 };
+
+WeatherMan.providerNames = [
+    constants.YAHOO,
+    constants.OPENWEATHERMAP,
+    constants.YRNO,
+    constants.FORECASTIO,
+    constants.AQICN,
+];
 
 WeatherMan.FAHRENHEIT = constants.FAHRENHEIT;
 WeatherMan.CELCIUS = constants.CELCIUS;
@@ -59,8 +62,32 @@ WeatherMan.SNOW_THUNDERSTORM = constants.SNOW_THUNDERSTORM;
 WeatherMan.CurrentResult = CurrentResult;
 WeatherMan.CurrentAQIResult = CurrentAQIResult;
 
+WeatherMan.prototype.getProvider = function(name) {
+    var provider = null;
+    if (name == constants.YAHOO) {
+        provider = yahoo;
+    }
+    else if (name == constants.OPENWEATHERMAP) {
+        provider = openweathermap;
+    }
+    else if (name == constants.YRNO) {
+        provider = yrno;
+    }
+    else if (name == constants.FORECASTIO) {
+        provider = forecastio;
+    }
+    else if (name == constants.AQICN) {
+        provider = aqicn;
+    }
+    else {
+        throw new InvalidProvider(name);
+    }
+
+    return provider;
+};
+
 WeatherMan.prototype.getCurrent = function(lat, lng, getSunrise) {
-    return providers[this.provider].getCurrent(lat, lng, this.apiKey, getSunrise);
+    return this.getProvider(this.providerName).getCurrent(lat, lng, this.apiKey, getSunrise);
 };
 
 module.exports = WeatherMan;
