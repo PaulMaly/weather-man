@@ -86,12 +86,24 @@ function getCurrent(lat, lng) {
             }
 
             if (data.item && data.item.condition && data.item.condition.temp && data.item.condition.code) {
-                result.setTemperature(data.item.condition.temp, constants.CELCIUS);
+                if (data.units.temperature == 'F') {
+                    result.setTemperature(data.item.condition.temp, constants.FAHRENHEIT);
+                }
+                else {
+                    result.setTemperature(data.item.condition.temp, constants.CELCIUS);
+                }
+
+                if (data.units.speed == 'mph') {
+                    result.setWindSpeed(data.wind.speed, constants.MILES);
+                }
+                else {
+                    result.setWindSpeed(data.wind.speed, constants.KILOMETERS);
+                }
+
                 result.setCondition(condition(data.item.condition.code));
                 result.setSunrise(convertTime(data.astronomy.sunrise));
                 result.setSunset(convertTime(data.astronomy.sunset));
                 result.setHumidity(data.atmosphere.humidity);
-                result.setWindSpeed(data.wind.speed, constants.KILOMETERS);
             }
             else {
                 throw new MalformedResponse(constants.YAHOO);
