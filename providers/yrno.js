@@ -151,7 +151,7 @@ function getCurrent(lat, lng, apiKey, getSunrise) {
                 }
 
                 if (getSunrise) {
-                    var surl = 'http://api.yr.no/weatherapi/sunrise/1.0/?lat=' + lat + ';lon=' + lng + ';date=' + moment().format('YYYY-MM-DD');
+                    var surl = 'http://api.yr.no/weatherapi/sunrise/1.1/?lat=' + lat + ';lon=' + lng + ';date=' + moment().format('YYYY-MM-DD');
                     return axios.get(surl).then(function(res) {
                         var sjson = x2js.xml2js(res.data);
                         if (sjson.astrodata && sjson.astrodata.time && sjson.astrodata.time.location && sjson.astrodata.time.location.sun) {
