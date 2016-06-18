@@ -1,3 +1,9 @@
+//Shims for Pebble to allow browserify to work
+if (window.Pebble) {
+    window.location = {}; //Shim for iOS
+    document.createElement = null; //Shim to trick the browserify shims (also for iOS)
+}
+
 require('es6-promise').polyfill();
 
 var yahoo = require('./providers/yahoo');
