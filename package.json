@@ -1,6 +1,6 @@
 {
   "name": "weather-man",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Multiple weather providers in one spot",
   "main": "index.js",
   "repository": {
@@ -27,8 +27,7 @@
     "forcastio",
     "temperature",
     "air quality",
-    "aqi",
-    "pebble-package"
+    "aqi"
   ],
   "author": "Brian Douglass",
   "license": "GPL-3.0",
@@ -43,17 +42,5 @@
   "devDependencies": {
     "browserify": "^13.0.0",
     "uglifyify": "^3.0.1"
-  },
-  "pebble": {
-    "projectType": "package",
-    "sdkVersion": "3",
-    "targetPlatforms": [
-      "aplite",
-      "basalt",
-      "chalk"
-    ],
-    "resources": {
-      "media": []
-    }
   }
 }
