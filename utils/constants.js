@@ -28,6 +28,6 @@ module.exports = {
     TORNADO: 'tornado',
     HURRICANE: 'hurricane',
     EXTREME_COLD: 'extreme cold',
-    EXTREME_HEAT: 'extreme cold',
+    EXTREME_HEAT: 'extreme heat',
     SNOW_THUNDERSTORM: 'snow thunderstorm',
 };
