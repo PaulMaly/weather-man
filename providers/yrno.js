@@ -4,6 +4,7 @@ var X2JS = require('x2js');
 var CurrentResult = require('../results/currentResult');
 var MalformedResponse = require('../utils/exceptions').MalformedResponse;
 var constants = require('../utils/constants');
+var results = require('../utils/results');
 
 //Reference: http://api.yr.no/weatherapi/weathericon/1.1/documentation
 function condition(code) {
@@ -62,6 +63,25 @@ function condition(code) {
     }
 
     return returnCode;
+}
+
+function flatResults(res) {
+
+    var map = {};
+
+    map[constants.LAT] = '_latitude';
+    map[constants.LON] = '_longitude';
+    map[constants.TEMP] = 'temperature._value';
+    map[constants.CODE] = 'symbol._number';
+    map[constants.SUMMARY] = 'symbol._id';
+    map[constants.HUMIDITY] = 'humidity._value';
+    map[constants.PRESSURE] = 'pressure._value';
+    map[constants.SUNRISE] = '_sunrise';
+    map[constants.SUNSET] = '_sunset';
+    map[constants.WIND_SPEED] = 'windSpeed._mps';
+    map[constants.WIND_DIR] = 'windDirection._deg';
+
+    return results.mapResults(res, map);
 }
 
 function convertTime(timestamp) {
@@ -159,8 +179,15 @@ function getCurrent(lat, lng, apiKey, getSunrise) {
                             result.setSunset(convertTime(sjson.astrodata.time.location.sun._set));
                         }
 
+                        fullWeather.location._sunrise = fullWeather.location._sunrise || sjson.astrodata.time.location.sun._rise;
+                        fullWeather.location._sunset = fullWeather.location._sunset || sjson.astrodata.time.location.sun._set;
+
+                        result.setFullResults(flatResults(fullWeather.location));
+
                         return result;
                     });
+                } else {
+                    result.setFullResults(flatResults(fullWeather.location));
                 }
             }
             else {

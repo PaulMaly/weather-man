@@ -30,4 +30,22 @@ module.exports = {
     EXTREME_COLD: 'extreme cold',
     EXTREME_HEAT: 'extreme cold',
     SNOW_THUNDERSTORM: 'snow thunderstorm',
+
+// flat result object keys
+
+    LAT: 'lat',
+    LON: 'lon',
+    TEMP: 'temp',
+    MAX: 'max',
+    MIN: 'min',
+    CODE: 'code',
+    SUMMARY: 'summary',
+    HUMIDITY: 'humidity',
+    PRESSURE: 'pressure',
+    VISIBILITY: 'visibility',
+    SUNRISE: 'sunrise',
+    SUNSET: 'sunset',
+    WIND_SPEED: 'windSpeed',
+    WIND_DIR: 'windDir',
+    FEELS_LIKE: 'feelsLike'
 };
