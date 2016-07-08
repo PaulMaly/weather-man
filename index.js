@@ -1,5 +1,5 @@
 //Shims for Pebble to allow browserify to work
-if (window.Pebble) {
+if (typeof Pebble !== 'undefined') {
     window.location = {}; //Shim for iOS
     document.createElement = null; //Shim to trick the browserify shims (also for iOS)
 }

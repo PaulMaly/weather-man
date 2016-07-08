@@ -2,7 +2,8 @@
 
 A JavaScript weather library with multiple weather povider options. Currently it
 supports the following weather providers: Yahoo, OpenWeatherMap, YR.no, Forecast.io,
-and AQICN.org (for air quality data).
+and AQICN.org (for air quality data). Use it in NodeJS, the browser, the command
+line or even with your Pebble app!
 
 ## Install
 
@@ -11,7 +12,7 @@ and AQICN.org (for air quality data).
 
 ## Usage
 
-NodeJS
+### NodeJS
 
 ~~~
 var WeatherMan = require('weather-man');
@@ -36,12 +37,12 @@ wm.getCurrent(latitude, longitude).then(function(result) {
 });
 ~~~
 
-Browser
+### Browser & PebbleKit
 
-Grab a copy of example/weather-man.js and include it in your html.
-Then follow the NodeJS example (without the require).
+Grab a copy of example/weather-man.js and include it in your project, then
+follow the NodeJS example.
 
-CLI
+### CLI
 
 `weatherman --provider=forecastio --lat=123 --lng=456 --units=f --apikey=apikey`
 
