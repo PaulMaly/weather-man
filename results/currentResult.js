@@ -59,7 +59,7 @@ CurrentResult.prototype.minutesToDate = function(time) {
     var hours = Math.round((time - minutes) / 60);
 
     var date = new Date();
-    date.setHours(hour);
+    date.setHours(hours);
     date.setMinutes(minutes);
 
     return date;
