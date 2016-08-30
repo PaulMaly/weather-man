@@ -43,8 +43,8 @@ CurrentResult.prototype.setFullResults = function(results) {
     this.fullResults = results || {};
 };
 
-CurrentResult.prototype.getTemperature = function(units) {
-    return convert.temperature(this.temperature, this.temperatureUnits, units);
+CurrentResult.prototype.getTemperature = function(units, temp) {
+    return convert.temperature(temp || this.temperature, this.temperatureUnits, units);
 };
 
 CurrentResult.prototype.getWindSpeed = function(units) {
