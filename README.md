@@ -1,7 +1,7 @@
 # WeatherMan
 
 A JavaScript weather library with multiple weather povider options. Currently it
-supports the following weather providers: Yahoo, OpenWeatherMap, YR.no, Forecast.io,
+supports the following weather providers: Yahoo, OpenWeatherMap, YR.no, Dark Sky (formerly Forecast.io),
 and AQICN.org (for air quality data). Use it in NodeJS, the browser, the command
 line or even with your Pebble app!
 
@@ -44,7 +44,7 @@ follow the NodeJS example.
 
 ### CLI
 
-`weatherman --provider=forecastio --lat=123 --lng=456 --units=f --apikey=apikey`
+`weatherman --provider=darksky --lat=123 --lng=456 --units=f --apikey=apikey`
 
 ## License
 

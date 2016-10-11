@@ -35,7 +35,7 @@ function convertTime(timestamp) {
 }
 
 function getCurrent(lat, lng, apiKey) {
-    var url = 'https://api.forecast.io/forecast/' + apiKey + '/' + lat + ',' + lng;
+    var url = 'https://api.darksky.net/forecast/' + apiKey + '/' + lat + ',' + lng;
     return axios.get(url).then(function(res) {
         var result = new CurrentResult();
 

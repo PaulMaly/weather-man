@@ -9,7 +9,7 @@ require('es6-promise').polyfill();
 var yahoo = require('./providers/yahoo');
 var openweathermap = require('./providers/openweathermap');
 var yrno = require('./providers/yrno');
-var forecastio = require('./providers/forecastio');
+var darksky = require('./providers/darksky');
 var aqicn = require('./providers/aqicn');
 var constants = require('./utils/constants');
 var InvalidProvider = require('./utils/exceptions').InvalidProvider;
@@ -30,6 +30,7 @@ WeatherMan.providerNames = [
     constants.OPENWEATHERMAP,
     constants.YRNO,
     constants.FORECASTIO,
+    constants.DARKSKY,
     constants.AQICN,
 ];
 
@@ -47,6 +48,7 @@ WeatherMan.YAHOO = constants.YAHOO;
 WeatherMan.OPENWEATHERMAP = constants.OPENWEATHERMAP;
 WeatherMan.YRNO = constants.YRNO;
 WeatherMan.FORECASTIO = constants.FORECASTIO;
+WeatherMan.DARKSKY = constants.DARKSKY;
 WeatherMan.AQICN = constants.AQICN;
 
 WeatherMan.CLEAR = constants.CLEAR;
@@ -79,8 +81,8 @@ WeatherMan.prototype.getProvider = function(name) {
     else if (name == constants.YRNO) {
         provider = yrno;
     }
-    else if (name == constants.FORECASTIO) {
-        provider = forecastio;
+    else if (name == constants.FORECASTIO || name == constants.DARKSKY) {
+        provider = darksky;
     }
     else if (name == constants.AQICN) {
         provider = aqicn;

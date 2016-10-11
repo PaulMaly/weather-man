@@ -1,6 +1,6 @@
 {
   "name": "weather-man",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Multiple weather providers in one spot",
   "main": "index.js",
   "repository": {
