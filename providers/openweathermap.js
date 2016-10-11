@@ -2,6 +2,7 @@ var axios = require('axios');
 var CurrentResult = require('../results/currentResult');
 var MalformedResponse = require('../utils/exceptions').MalformedResponse;
 var constants = require('../utils/constants');
+var results = require('../utils/results');
 
 function condition(code) {
     var returnCode = constants.CLEAR;
@@ -51,6 +52,28 @@ function condition(code) {
     return returnCode;
 }
 
+function flatResults(res) {
+
+    var map = {};
+
+    map[constants.LAT] = 'coord.lat';
+    map[constants.LON] = 'coord.lon';
+    map[constants.TEMP] = 'main.temp';
+    map[constants.MAX] = 'main.temp_max';
+    map[constants.MIN] = 'main.temp_min';
+    map[constants.CODE] = 'weather.0.id';
+    map[constants.SUMMARY] = 'weather.0.main';
+    map[constants.HUMIDITY] = 'main.humidity';
+    map[constants.PRESSURE] = 'main.pressure';
+    map[constants.VISIBILITY] = 'visibility.value';
+    map[constants.SUNRISE] = 'sys.sunrise';
+    map[constants.SUNSET] = 'sys.sunset';
+    map[constants.WIND_SPEED] = 'wind.speed';
+    map[constants.WIND_DIR] = 'wind.deg';
+
+    return results.mapResults(res, map);
+}
+
 function convertTime(timestamp) {
     var date = new Date(timestamp * 1000);
     return date.getHours() * 60 + date.getMinutes();
@@ -68,6 +91,7 @@ function getCurrent(lat, lng, apiKey) {
             result.setSunset(convertTime(res.data.sys.sunset));
             result.setHumidity(res.data.main.humidity);
             result.setWindSpeed(res.data.wind.speed, constants.KILOMETERS);
+            result.setFullResults(flatResults(res.data));
         }
         else {
             throw new MalformedResponse(constants.OPENWEATHERMAP);

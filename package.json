@@ -37,7 +37,8 @@
     "minimist": "^1.2.0",
     "moment": "^2.11.2",
     "x2js": "^2.0.0",
-    "xmldom": "^0.1.22"
+    "xmldom": "^0.1.22",
+    "flat": "^2.0.1"
   },
   "devDependencies": {
     "browserify": "^13.0.0",

@@ -2,6 +2,7 @@ var axios = require('axios');
 var CurrentResult = require('../results/currentResult');
 var MalformedResponse = require('../utils/exceptions').MalformedResponse;
 var constants = require('../utils/constants');
+var results = require('../utils/results');
 
 function condition(code) {
     var returnCode = constants.CLEAR;
@@ -54,6 +55,26 @@ function condition(code) {
     return returnCode;
 }
 
+function flatResults(res) {
+
+    var map = {};
+
+    map[constants.LAT] = 'item.lat';
+    map[constants.LON] = 'item.long';
+    map[constants.TEMP] = 'item.condition.temp';
+    map[constants.CODE] = 'item.condition.code';
+    map[constants.SUMMARY] = 'item.condition.text';
+    map[constants.HUMIDITY] = 'atmosphere.humidity';
+    map[constants.PRESSURE] = 'atmosphere.pressure';
+    map[constants.VISIBILITY] = 'atmosphere.visibility';
+    map[constants.SUNRISE] = 'astronomy.sunrise';
+    map[constants.SUNSET] = 'astronomy.sunset';
+    map[constants.WIND_SPEED] = 'wind.speed';
+    map[constants.WIND_DIR] = 'wind.direction';
+
+    return results.mapResults(res, map);
+}
+
 function convertTime(string) {
     string = string.toLowerCase();
     var time = string.replace('am', '').replace('pm', '').replace(' ', '');
@@ -104,6 +125,7 @@ function getCurrent(lat, lng) {
                 result.setSunrise(convertTime(data.astronomy.sunrise));
                 result.setSunset(convertTime(data.astronomy.sunset));
                 result.setHumidity(data.atmosphere.humidity);
+                result.setFullResults(flatResults(data));
             }
             else {
                 throw new MalformedResponse(constants.YAHOO);

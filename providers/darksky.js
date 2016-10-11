@@ -2,6 +2,7 @@ var axios = require('axios');
 var CurrentResult = require('../results/currentResult');
 var MalformedResponse = require('../utils/exceptions').MalformedResponse;
 var constants = require('../utils/constants');
+var results = require('../utils/results');
 
 function condition(code) {
     var returnCode = constants.CLEAR;
@@ -27,6 +28,29 @@ function condition(code) {
     }
 
     return returnCode;
+}
+
+function flatResults(res) {
+
+    var map = {};
+
+    map[constants.LAT] = 'latitude';
+    map[constants.LON] = 'longitude';
+    map[constants.TEMP] = 'currently.temperature';
+    map[constants.MAX] = '_temp_max';
+    map[constants.MIN] = '_temp_min';
+    map[constants.CODE] = 'currently.icon';
+    map[constants.SUMMARY] = 'currently.summary';
+    map[constants.HUMIDITY] = 'currently.humidity';
+    map[constants.PRESSURE] = 'currently.pressure';
+    map[constants.VISIBILITY] = 'currently.visibility';
+    map[constants.SUNRISE] = '_sunrise';
+    map[constants.SUNSET] = '_sunset';
+    map[constants.WIND_SPEED] = 'currently.windSpeed';
+    map[constants.WIND_DIR] = 'currently.windBearing';
+    map[constants.FEELS_LIKE] = 'currently.apparentTemperature';
+
+    return results.mapResults(res, map);
 }
 
 function convertTime(timestamp) {
@@ -56,6 +80,13 @@ function getCurrent(lat, lng, apiKey) {
                 result.setSunrise(convertTime(current.sunriseTime));
                 result.setSunset(convertTime(current.sunsetTime));
             }
+
+            res.data._sunrise = res.data._sunrise || current.sunriseTime;
+            res.data._sunset = res.data._sunset || current.sunsetTime;
+            res.data._temp_max = res.data._temp_max || current.temperatureMax;
+            res.data._temp_min = res.data._temp_min || current.temperatureMin;
+
+            result.setFullResults(flatResults(res.data));
         }
         else {
             throw new MalformedResponse(constants.OPENWEATHERMAP);

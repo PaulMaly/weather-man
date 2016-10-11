@@ -10,6 +10,7 @@ var CurrentResult = function() {
     this.humidity = 0;
     this.sunrise = 1;
     this.sunset = 0;
+    this.fullResults = {};
 };
 
 CurrentResult.prototype.setTemperature = function(temp, units) {
@@ -38,8 +39,12 @@ CurrentResult.prototype.setSunset = function(sunset) {
     this.sunset = (sunset === null || sunset === undefined) ? 0 : parseInt(sunset);
 };
 
-CurrentResult.prototype.getTemperature = function(units) {
-    return convert.temperature(this.temperature, this.temperatureUnits, units);
+CurrentResult.prototype.setFullResults = function(results) {
+    this.fullResults = results || {};
+};
+
+CurrentResult.prototype.getTemperature = function(units, temp) {
+    return convert.temperature(temp || this.temperature, this.temperatureUnits, units);
 };
 
 CurrentResult.prototype.getWindSpeed = function(units) {
@@ -147,6 +152,10 @@ CurrentResult.prototype.getHeatIndex = function(units) {
     }
 
     return convert.temperature(heatIndex, constants.FAHRENHEIT, units);
+};
+
+CurrentResult.prototype.getFullResults = function() {
+    return this.fullResults;
 };
 
 module.exports = CurrentResult;
