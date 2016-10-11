@@ -182,12 +182,12 @@ function getCurrent(lat, lng, apiKey, getSunrise) {
                         fullWeather.location._sunrise = fullWeather.location._sunrise || sjson.astrodata.time.location.sun._rise;
                         fullWeather.location._sunset = fullWeather.location._sunset || sjson.astrodata.time.location.sun._set;
 
-                        result.setFullResults(flatResults(fullWeather.location));
+                        result.setRawResults(flatResults(fullWeather.location));
 
                         return result;
                     });
                 } else {
-                    result.setFullResults(flatResults(fullWeather.location));
+                    result.setRawResults(flatResults(fullWeather.location));
                 }
             }
             else {

@@ -125,7 +125,7 @@ function getCurrent(lat, lng) {
                 result.setSunrise(convertTime(data.astronomy.sunrise));
                 result.setSunset(convertTime(data.astronomy.sunset));
                 result.setHumidity(data.atmosphere.humidity);
-                result.setFullResults(flatResults(data));
+                result.setRawResults(flatResults(data));
             }
             else {
                 throw new MalformedResponse(constants.YAHOO);

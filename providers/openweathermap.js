@@ -91,7 +91,7 @@ function getCurrent(lat, lng, apiKey) {
             result.setSunset(convertTime(res.data.sys.sunset));
             result.setHumidity(res.data.main.humidity);
             result.setWindSpeed(res.data.wind.speed, constants.KILOMETERS);
-            result.setFullResults(flatResults(res.data));
+            result.setRawResults(flatResults(res.data));
         }
         else {
             throw new MalformedResponse(constants.OPENWEATHERMAP);

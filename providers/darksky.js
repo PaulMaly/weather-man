@@ -86,7 +86,7 @@ function getCurrent(lat, lng, apiKey) {
             res.data._temp_max = res.data._temp_max || current.temperatureMax;
             res.data._temp_min = res.data._temp_min || current.temperatureMin;
 
-            result.setFullResults(flatResults(res.data));
+            result.setRawResults(flatResults(res.data));
         }
         else {
             throw new MalformedResponse(constants.OPENWEATHERMAP);
