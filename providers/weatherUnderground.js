@@ -1,6 +1,5 @@
 var axios = require('axios');
 var CurrentResult = require('../results/currentResult');
-var MalformedResponse = require('../utils/exceptions').MalformedResponse;
 var constants = require('../utils/constants');
 var results = require('../utils/results');
 
@@ -62,7 +61,6 @@ function getCurrent(lat, lng, apiKey) {
     var url = 'http://api.wunderground.com/api/' + apiKey + '/conditions/astronomy/q/' + lat + ',' + lng + '.json';
     return axios.get(url).then(function(res) {
         var result = new CurrentResult();
-
 
         if (res.data.sun_phase) {
             var sun = res.data.sun_phase;

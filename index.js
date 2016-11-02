@@ -12,18 +12,20 @@ var yrno = require('./providers/yrno');
 var darksky = require('./providers/darksky');
 var aqicn = require('./providers/aqicn');
 var weatherUnderground = require('./providers/weatherUnderground');
+var weatherUnlocked = require('./providers/weatherUnlocked');
 var constants = require('./utils/constants');
 var InvalidProvider = require('./utils/exceptions').InvalidProvider;
 var CurrentAQIResult = require('./results/currentAQIResult');
 var CurrentResult = require('./results/currentResult');
 
-var WeatherMan = function(providerName, apiKey) {
+var WeatherMan = function(providerName, apiKey, appId) {
     if (WeatherMan.providerNames.indexOf(providerName) == -1) {
         throw new InvalidProvider(providerName);
     }
 
     this.providerName = providerName;
     this.apiKey = apiKey;
+    this.appId = appId;
 };
 
 WeatherMan.providerNames = [
@@ -34,6 +36,7 @@ WeatherMan.providerNames = [
     constants.DARKSKY,
     constants.AQICN,
     constants.WEATHER_UNDERGROUND,
+    constants.WEATHER_UNLOCKED,
 ];
 
 WeatherMan.FAHRENHEIT = constants.FAHRENHEIT;
@@ -93,6 +96,9 @@ WeatherMan.prototype.getProvider = function(name) {
     else if (name == constants.WEATHER_UNDERGROUND) {
         provider = weatherUnderground;
     }
+    else if (name == constants.WEATHER_UNLOCKED) {
+        provider = weatherUnlocked;
+    }
     else {
         throw new InvalidProvider(name);
     }
@@ -101,7 +107,9 @@ WeatherMan.prototype.getProvider = function(name) {
 };
 
 WeatherMan.prototype.getCurrent = function(lat, lng, getSunrise) {
-    return this.getProvider(this.providerName).getCurrent(lat, lng, this.apiKey, getSunrise);
+    getSunrise = (getSunrise === undefined) ? true : getSunrise;
+
+    return this.getProvider(this.providerName).getCurrent(lat, lng, this.apiKey, this.appId, getSunrise);
 };
 
 module.exports = WeatherMan;

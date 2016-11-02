@@ -8,13 +8,14 @@ var args = minimist(process.argv.slice(2), {
         provider: WeatherMan.YRNO,
         units: WeatherMan.CELCIUS,
         apikey: null,
+        appId: null,
         lat: null,
         lng: null,
         json: false,
     }
 });
 
-var wm = new WeatherMan(args.provider, args.apikey);
+var wm = new WeatherMan(args.provider, args.apikey, args.appId);
 wm.getCurrent(args.lat, args.lng).then(function(result) {
     if (result instanceof WeatherMan.CurrentAQIResult) {
         var aqi = Math.round(result.getAQI() * 100) / 100;

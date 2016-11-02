@@ -89,8 +89,7 @@ function convertTime(timestamp) {
     return date.getHours() * 60 + date.getMinutes();
 }
 
-function getCurrent(lat, lng, apiKey, getSunrise) {
-    getSunrise = (getSunrise === undefined) ? true : getSunrise;
+function getCurrent(lat, lng, apiKey, appId, getSunrise) {
     var x2js = new X2JS();
 
     var url = 'http://api.yr.no/weatherapi/locationforecast/1.9/?lat=' + lat + ';lon=' + lng;
@@ -186,7 +185,8 @@ function getCurrent(lat, lng, apiKey, getSunrise) {
 
                         return result;
                     });
-                } else {
+                }
+                else {
                     result.setRawResults(flatResults(fullWeather.location));
                 }
             }

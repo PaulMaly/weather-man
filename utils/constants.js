@@ -18,6 +18,7 @@ module.exports = {
     DARKSKY: 'darksky',
     AQICN: 'aqicn',
     WEATHER_UNDERGROUND: 'weather underground',
+    WEATHER_UNLOCKED: 'weather unlocked',
 
     //Conditions
     CLEAR: 'clear',
