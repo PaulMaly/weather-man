@@ -13,6 +13,7 @@ var darksky = require('./providers/darksky');
 var aqicn = require('./providers/aqicn');
 var weatherUnderground = require('./providers/weatherUnderground');
 var weatherUnlocked = require('./providers/weatherUnlocked');
+var mars = require('./providers/mars');
 var constants = require('./utils/constants');
 var InvalidProvider = require('./utils/exceptions').InvalidProvider;
 var CurrentAQIResult = require('./results/currentAQIResult');
@@ -37,6 +38,7 @@ WeatherMan.providerNames = [
     constants.AQICN,
     constants.WEATHER_UNDERGROUND,
     constants.WEATHER_UNLOCKED,
+    constants.MARS,
 ];
 
 WeatherMan.FAHRENHEIT = constants.FAHRENHEIT;
@@ -56,6 +58,8 @@ WeatherMan.FORECASTIO = constants.FORECASTIO;
 WeatherMan.DARKSKY = constants.DARKSKY;
 WeatherMan.AQICN = constants.AQICN;
 WeatherMan.WEATHER_UNDERGROUND = constants.WEATHER_UNDERGROUND;
+WeatherMan.WEATHER_UNLOCKED = constants.WEATHER_UNLOCKED;
+WeatherMan.MARS = constants.MARS;
 
 WeatherMan.CLEAR = constants.CLEAR;
 WeatherMan.CLOUDY = constants.CLOUDY;
@@ -98,6 +102,9 @@ WeatherMan.prototype.getProvider = function(name) {
     }
     else if (name == constants.WEATHER_UNLOCKED) {
         provider = weatherUnlocked;
+    }
+    else if (name == constants.MARS) {
+        provider = mars;
     }
     else {
         throw new InvalidProvider(name);

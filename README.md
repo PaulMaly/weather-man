@@ -2,8 +2,8 @@
 
 A JavaScript weather library with multiple weather povider options. Currently it
 supports the following weather providers: Yahoo, OpenWeatherMap, YR.no, Dark Sky (formerly Forecast.io),
-and AQICN.org (for air quality data). Use it in NodeJS, the browser, the command
-line or even with your Pebble app!
+Weather Underground, Weather Unlocked, MAAS (Mars) and AQICN.org (for air quality
+data). Use it in NodeJS, the browser, the command line or even with your Pebble app!
 
 ## Install
 

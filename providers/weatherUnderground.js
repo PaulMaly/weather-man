@@ -1,5 +1,6 @@
 var axios = require('axios');
 var CurrentResult = require('../results/currentResult');
+var MalformedResponse = require('../utils/exceptions').MalformedResponse;
 var constants = require('../utils/constants');
 var results = require('../utils/results');
 

@@ -19,6 +19,7 @@ module.exports = {
     AQICN: 'aqicn',
     WEATHER_UNDERGROUND: 'weather underground',
     WEATHER_UNLOCKED: 'weather unlocked',
+    MARS: 'mars',
 
     //Conditions
     CLEAR: 'clear',

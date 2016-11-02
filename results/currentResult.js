@@ -113,8 +113,13 @@ CurrentResult.prototype.getSunsetFormatted = function(ampm) {
 
 CurrentResult.prototype.getWindChill = function(units) {
     var temp = this.getTemperature(constants.CELCIUS);
-    var v = Math.pow(this.getWindSpeed(constants.KILOMETERS), 0.16);
-    var windchill = 13.12 + 0.6215 * temp - 11.37 * v + 0.3965 * temp * v;
+    var windchill = temp;
+    var windSpeed = this.getWindSpeed(constants.KILOMETERS);
+
+    if (windSpeed != 0) {
+        var v = Math.pow(windSpeed, 0.16);
+        windchill = 13.12 + 0.6215 * temp - 11.37 * v + 0.3965 * temp * v;
+    }
 
     return convert.temperature(windchill, constants.CELCIUS, units);
 };
