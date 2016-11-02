@@ -89,7 +89,7 @@ function getCurrent(lat, lng, apiKey) {
             result.setRawResults(flatResults(res.data));
         }
         else {
-            throw new MalformedResponse(constants.OPENWEATHERMAP);
+            throw new MalformedResponse(constants.DARKSKY);
         }
 
         return result;

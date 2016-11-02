@@ -1,4 +1,5 @@
 module.exports = {
+    //Units
     FAHRENHEIT: 'f',
     CELCIUS: 'c',
     KELVIN: 'k',
@@ -9,13 +10,16 @@ module.exports = {
 
     AMPM: 'am/pm',
 
+    //Providers
     YAHOO: 'yahoo',
     OPENWEATHERMAP: 'openweathermap',
     YRNO: 'yrno',
     FORECASTIO: 'forecastio',
     DARKSKY: 'darksky',
     AQICN: 'aqicn',
+    WEATHER_UNDERGROUND: 'weather underground',
 
+    //Conditions
     CLEAR: 'clear',
     CLOUDY: 'cloudy',
     FOG: 'fog',
@@ -32,8 +36,7 @@ module.exports = {
     EXTREME_HEAT: 'extreme heat',
     SNOW_THUNDERSTORM: 'snow thunderstorm',
 
-// flat result object keys
-
+    //Flat result object keys
     LAT: 'lat',
     LON: 'lon',
     TEMP: 'temp',

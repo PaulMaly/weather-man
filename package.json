@@ -15,7 +15,7 @@
     "weatherman": "bin/weatherman"
   },
   "scripts": {
-    "browserify": "browserify -g uglifyify index.js --standalone WeatherMan | tee example/weather-man.js | tee src/js/index.js",
+    "browserify": "browserify -g uglifyify index.js --standalone WeatherMan | tee example/weather-man.js",
     "server": "cd example && http-server -p 8000"
   },
   "keywords": [
