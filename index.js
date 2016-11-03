@@ -6,14 +6,6 @@ if (typeof Pebble !== 'undefined') {
 
 require('es6-promise').polyfill();
 
-var yahoo = require('./providers/yahoo');
-var openweathermap = require('./providers/openweathermap');
-var yrno = require('./providers/yrno');
-var darksky = require('./providers/darksky');
-var aqicn = require('./providers/aqicn');
-var weatherUnderground = require('./providers/weatherUnderground');
-var weatherUnlocked = require('./providers/weatherUnlocked');
-var mars = require('./providers/mars');
 var constants = require('./utils/constants');
 var InvalidProvider = require('./utils/exceptions').InvalidProvider;
 var CurrentAQIResult = require('./results/currentAQIResult');
@@ -83,28 +75,28 @@ WeatherMan.CurrentAQIResult = CurrentAQIResult;
 WeatherMan.prototype.getProvider = function(name) {
     var provider = null;
     if (name == constants.YAHOO) {
-        provider = yahoo;
+        provider = require('./providers/yahoo');
     }
     else if (name == constants.OPENWEATHERMAP) {
-        provider = openweathermap;
+        provider = require('./providers/openweathermap');
     }
     else if (name == constants.YRNO) {
-        provider = yrno;
+        provider = require('./providers/yrno');
     }
     else if (name == constants.FORECASTIO || name == constants.DARKSKY) {
-        provider = darksky;
+        provider = require('./providers/darksky');
     }
     else if (name == constants.AQICN) {
-        provider = aqicn;
+        provider = require('./providers/aqicn');
     }
     else if (name == constants.WEATHER_UNDERGROUND) {
-        provider = weatherUnderground;
+        provider = require('./providers/weatherUnderground');
     }
     else if (name == constants.WEATHER_UNLOCKED) {
-        provider = weatherUnlocked;
+        provider = require('./providers/weatherUnlocked');
     }
     else if (name == constants.MARS) {
-        provider = mars;
+        provider = require('./providers/mars');
     }
     else {
         throw new InvalidProvider(name);

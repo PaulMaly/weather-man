@@ -12,6 +12,9 @@ var args = minimist(process.argv.slice(2), {
         lat: null,
         lng: null,
         json: false,
+    },
+    alias: {
+        apiKey: 'apikey'
     }
 });
 
