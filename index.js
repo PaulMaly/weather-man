@@ -105,10 +105,11 @@ WeatherMan.prototype.getProvider = function(name) {
     return provider;
 };
 
-WeatherMan.prototype.getCurrent = function(lat, lng, getSunrise) {
+WeatherMan.prototype.getCurrent = function(lat, lng, getSunrise, queryTail) {
     getSunrise = (getSunrise === undefined) ? true : getSunrise;
-
-    return this.getProvider(this.providerName).getCurrent(lat, lng, this.apiKey, this.appId, getSunrise);
+    queryTail = queryTail || '';
+    
+    return this.getProvider(this.providerName).getCurrent(lat, lng, this.apiKey, this.appId, getSunrise, queryTail);
 };
 
 module.exports = WeatherMan;
