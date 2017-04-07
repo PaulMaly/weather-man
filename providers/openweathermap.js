@@ -79,7 +79,7 @@ function convertTime(timestamp) {
     return date.getHours() * 60 + date.getMinutes();
 }
 
-function getCurrent(lat, lng, apiKey, getSunrise, queryTail) {
+function getCurrent(lat, lng, apiKey, appId, getSunrise, queryTail) {
     var url = 'http://api.openweathermap.org/data/2.5/weather?APPID=' + apiKey + '&lat=' + lat + '&lon=' + lng + '&units=metric&' + queryTail;
     return axios.get(url).then(function(res) {
         var result = new CurrentResult();
