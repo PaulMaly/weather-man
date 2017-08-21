@@ -159,6 +159,15 @@ CurrentResult.prototype.getHeatIndex = function(units) {
     return convert.temperature(heatIndex, constants.FAHRENHEIT, units);
 };
 
+CurrentResult.prototype.getFeelsLike = function() {
+    var month = new Date().getUTCMonth() + 1;
+    if (month > 2 && month < 9) {
+        return this.getHeatIndex();
+    } else if (month > 8 || month < 3) {
+        return this.getWindChill();
+    }
+};
+
 CurrentResult.prototype.getRawResults = function() {
     return this.rawResults;
 };
